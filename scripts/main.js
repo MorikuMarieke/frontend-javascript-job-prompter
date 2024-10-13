@@ -71,4 +71,39 @@ const departments = {
     }
 }
 
-console.log(departments);
+
+const chosenDepartment = prompt("Over welke afdeling wil je meer informatie? Kies uit: [marketing / sales / customer-service]");
+console.log(chosenDepartment);
+
+const department = departments[chosenDepartment];
+
+if (department) {
+
+    document.getElementById('department-description').innerHTML = `<br><br><br>Je koos ${chosenDepartment}.\n ${department.description}`;
+    document.getElementById('error-message').textContent = "";
+
+    setTimeout(() => {
+
+    let numberOfJobs = "";
+    for (let i = 0; i < (department.jobs.length); i++) {
+        numberOfJobs += i + ": " + department.jobs[i].title + "\n";
+    }
+    console.log(numberOfJobs);
+
+    const jobChoice = prompt(`Je koos voor ${department}. Over welke functie wil je meer weten? Voer een getal tussen 0 en ${department.jobs.length - 1} in.\n` + numberOfJobs);
+
+    const job = department.jobs[parseInt(jobChoice)];
+    console.log(jobChoice);
+
+    if (job) {
+        document.getElementById('role-title').textContent = `Je koos: ${job.title}. Een uitdagende rol!`;
+        document.getElementById('role-description').textContent = `${job.description}`
+    } else {
+        document.getElementById('error-message').textContent = 'Ongeldige keuze. Probeer het opnieuw door de pagina te verversen!';
+    }
+
+    }, 5000);
+
+} else {
+    document.getElementById('error-message').textContent = 'Ongeldige keuze. Probeer het opnieuw door de pagina te verversen!';
+}
